@@ -295,7 +295,7 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
                     handleEditCounter(activeCounter)
                   }}
                 >
-                  <Settings className="h-4 w-4 pointer-events-none" />
+                  <Settings className="h-4 w-4" />
                 </button>
                 {project.counters.length > 1 && (
                   <button
@@ -306,7 +306,7 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
                       handleDeleteCounter(activeCounter.id)
                     }}
                   >
-                    <Trash2 className="h-4 w-4 pointer-events-none" />
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 )}
               </div>
@@ -343,11 +343,13 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
 
         <button
           type="button"
-          className="w-full h-12 px-4 rounded-[24px] bg-card border-2 border-border hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 font-semibold active:scale-95 touch-manipulation flex items-center justify-center gap-2"
+          className="w-full h-12 px-4 rounded-[24px] bg-card border-2 border-border hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 font-semibold active:scale-95 touch-manipulation"
           onClick={handleAddCounter}
         >
-          <PlusIcon className="h-5 w-5" aria-hidden="true" />
-          <span>Add Counter</span>
+          <div className="flex items-center justify-center gap-2 pointer-events-none">
+            <PlusIcon className="h-5 w-5" />
+            <span>Add Counter</span>
+          </div>
         </button>
       </div>
 
