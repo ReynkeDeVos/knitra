@@ -31,7 +31,7 @@ export function FabMenu({
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-2 -right-28 sm:bottom-8 sm:right-8">
       {/* Menu items - appear above FAB when expanded with stagger animation */}
       <div
         className={`flex flex-col gap-4 mb-4 transition-all duration-500 ease-out ${
