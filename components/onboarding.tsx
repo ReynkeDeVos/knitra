@@ -4,25 +4,31 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
 
-export function Onboarding() {
+interface OnboardingProps {
+  onVisibilityChange?: (visible: boolean) => void
+}
+
+export function Onboarding({ onVisibilityChange }: OnboardingProps = {}) {
   const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem("knittingpal_onboarding_seen")
     if (!hasSeenOnboarding) {
       setShowOnboarding(true)
+      onVisibilityChange?.(true)
     }
-  }, [])
+  }, [onVisibilityChange])
 
   const handleClose = () => {
     localStorage.setItem("knittingpal_onboarding_seen", "true")
     setShowOnboarding(false)
+    onVisibilityChange?.(false)
   }
 
   if (!showOnboarding) return null
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-500">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-6 animate-in fade-in duration-500">
       <div className="bg-card rounded-[40px] p-10 max-w-md w-full shadow-2xl border-2 border-border relative animate-in zoom-in-95 slide-in-from-bottom-8 duration-700 delay-200">
         <button
           onClick={handleClose}

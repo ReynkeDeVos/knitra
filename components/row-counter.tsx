@@ -249,22 +249,23 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
 
         <button
           onClick={handleIncrement}
-          className="group relative flex items-center justify-center w-[300px] h-[300px] rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-2xl active:scale-90 transition-all duration-500 ease-out touch-manipulation hover:shadow-primary/40 hover:shadow-[0_20px_60px] hover:scale-105 active:duration-150"
+          className="group relative flex items-center justify-center w-[300px] h-[300px] rounded-full text-primary-foreground shadow-2xl active:scale-90 transition-all duration-500 ease-out touch-manipulation hover:shadow-primary/40 hover:shadow-[0_20px_60px] hover:scale-105 active:duration-150"
           aria-label="Increment counter"
           style={{
             background: activeCounter?.currentValue === 0
               ? "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%)"
               : "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--tertiary)) 100%)",
+            color: "hsl(var(--primary-foreground))",
           }}
         >
           {/* Animated ring on hover */}
-          <div className="absolute inset-0 rounded-full bg-primary/20 scale-110 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
+          <div className="absolute inset-0 rounded-full bg-primary/20 scale-110 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl pointer-events-none" />
 
-          <div className="text-center relative z-10">
-            <div className="text-8xl font-bold tabular-nums tracking-tight drop-shadow-lg">
+          <div className="text-center relative z-10 pointer-events-none">
+            <div className="text-8xl font-bold tabular-nums tracking-tight drop-shadow-lg" style={{ color: "hsl(var(--primary-foreground))" }}>
               {activeCounter?.currentValue || 0}
             </div>
-            <div className="text-lg mt-2 opacity-95 font-medium">
+            <div className="text-lg mt-2 opacity-95 font-medium" style={{ color: "hsl(var(--primary-foreground))" }}>
               {activeCounter?.currentValue === 0 ? "Tap to start" : `Tap to add ${activeCounter?.name || "row"}`}
             </div>
           </div>
@@ -280,24 +281,32 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
         </div>
       )}
 
-      <div className="w-full max-w-md space-y-4">
+      <div className="w-full max-w-md space-y-4 px-4">
         {activeCounter && (
           <div className="p-5 rounded-[28px] bg-card border-2 border-border shadow-xl backdrop-blur-sm">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-lg text-foreground">{activeCounter.name}</h3>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <button
-                  className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-accent transition-all duration-300 active:scale-95"
-                  onClick={() => handleEditCounter(activeCounter)}
+                  type="button"
+                  className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-accent transition-all duration-300 active:scale-95 touch-manipulation"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleEditCounter(activeCounter)
+                  }}
                 >
-                  <Settings className="h-4 w-4" />
+                  <Settings className="h-4 w-4 pointer-events-none" />
                 </button>
                 {project.counters.length > 1 && (
                   <button
-                    className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-destructive/10 text-destructive transition-all duration-300 active:scale-95"
-                    onClick={() => handleDeleteCounter(activeCounter.id)}
+                    type="button"
+                    className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-destructive/10 text-destructive transition-all duration-300 active:scale-95 touch-manipulation"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleDeleteCounter(activeCounter.id)
+                    }}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 pointer-events-none" />
                   </button>
                 )}
               </div>
@@ -333,11 +342,12 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
         )}
 
         <button
-          className="w-full h-12 rounded-[24px] bg-card border-2 border-border hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold active:scale-95"
+          type="button"
+          className="w-full h-12 px-4 rounded-[24px] bg-card border-2 border-border hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 font-semibold active:scale-95 touch-manipulation flex items-center justify-center gap-2"
           onClick={handleAddCounter}
         >
-          <PlusIcon className="h-5 w-5" />
-          Add Counter
+          <PlusIcon className="h-5 w-5" aria-hidden="true" />
+          <span>Add Counter</span>
         </button>
       </div>
 

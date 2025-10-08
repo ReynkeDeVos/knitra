@@ -99,9 +99,9 @@ export function FabMenu({
         }`}
         aria-label={isExpanded ? "Close menu" : "Open menu"}
       >
-        <div className="relative w-8 h-8">
+        <div className="relative flex items-center justify-center w-8 h-8">
           <Menu
-            className={`absolute inset-0 transition-all duration-500 ${
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
               isExpanded
                 ? "rotate-180 opacity-0 scale-0"
                 : "rotate-0 opacity-100 scale-100"
@@ -109,7 +109,7 @@ export function FabMenu({
             strokeWidth={2.5}
           />
           <X
-            className={`absolute inset-0 transition-all duration-500 ${
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
               isExpanded
                 ? "rotate-0 opacity-100 scale-100"
                 : "-rotate-180 opacity-0 scale-0"

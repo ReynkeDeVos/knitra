@@ -16,7 +16,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 pnpm-lock*
-pnpm-workspace*
+pnpm-workspace.*
+.claude
 
 # env files
 .env*

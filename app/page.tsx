@@ -16,6 +16,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [showNewProjectDialog, setShowNewProjectDialog] = useState(false)
   const [editingProject, setEditingProject] = useState<KnittingProject | undefined>(undefined)
+  const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
     const loadedProjects = getProjects()
@@ -135,7 +136,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-primary/5">
-      <Onboarding />
+      <Onboarding onVisibilityChange={setShowOnboarding} />
 
       <main className="flex-1 flex flex-col pb-32">
         {showProjects ? (
@@ -172,14 +173,16 @@ export default function Home() {
         )}
       </main>
 
-      <FabMenu
-        onProjectsClick={() => setShowProjects(!showProjects)}
-        onNewProjectClick={() => {
-          setEditingProject(undefined)
-          setShowNewProjectDialog(true)
-        }}
-        showProjects={showProjects}
-      />
+      {!showOnboarding && (
+        <FabMenu
+          onProjectsClick={() => setShowProjects(!showProjects)}
+          onNewProjectClick={() => {
+            setEditingProject(undefined)
+            setShowNewProjectDialog(true)
+          }}
+          showProjects={showProjects}
+        />
+      )}
 
       <NewProjectDialog
         open={showNewProjectDialog}
