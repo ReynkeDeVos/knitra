@@ -134,13 +134,17 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-primary/5">
       <Onboarding />
 
-      <main className="flex-1 flex flex-col pb-24">
+      <main className="flex-1 flex flex-col pb-32">
         {showProjects ? (
           <div className="flex-1 overflow-auto">
-            <div className="max-w-2xl mx-auto py-6">
+            <div className="max-w-3xl mx-auto py-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+              <div className="px-6 mb-6">
+                <h1 className="text-3xl font-bold text-foreground">Your Projects</h1>
+                <p className="text-muted-foreground mt-2">Manage all your knitting projects</p>
+              </div>
               <ProjectList
                 projects={projects}
                 activeProjectId={activeProjectId || ""}
@@ -154,13 +158,15 @@ export default function Home() {
             </div>
           </div>
         ) : activeProject ? (
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex-1 flex items-center justify-center animate-in fade-in zoom-in-95 duration-700">
             <RowCounter project={activeProject} onUpdateProject={updateProject} />
           </div>
         ) : (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center px-6">
-              <p className="text-muted-foreground mb-6">Create your first project to get started</p>
+          <div className="flex-1 flex items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center px-6 py-12">
+              <div className="mb-6 text-6xl">🧶</div>
+              <h2 className="text-2xl font-bold text-foreground mb-3">Welcome to KnittingPal</h2>
+              <p className="text-muted-foreground mb-6 max-w-md">Create your first project to start tracking rows, pattern repeats, and more</p>
             </div>
           </div>
         )}

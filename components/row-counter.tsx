@@ -199,41 +199,49 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
       {project.counters.length > 1 && (
         <div className="flex gap-2 flex-wrap justify-center max-w-md">
           {project.counters.map((counter) => (
-            <Button
+            <button
               key={counter.id}
-              variant={counter.id === activeCounterId ? "default" : "outline"}
-              size="sm"
-              className="rounded-full"
+              className={`px-5 py-2.5 rounded-[24px] font-semibold text-sm transition-all duration-500 ${
+                counter.id === activeCounterId
+                  ? "bg-primary text-primary-foreground shadow-xl scale-110"
+                  : "bg-card border-2 border-border text-foreground hover:bg-accent hover:scale-105 shadow-md"
+              }`}
               onClick={() => setActiveCounterId(counter.id)}
             >
               {counter.name}
-            </Button>
+            </button>
           ))}
         </div>
       )}
 
       <div className="relative">
         {activeCounter?.targetValue && (
-          <svg className="absolute inset-0 -rotate-90" width="280" height="280">
+          <svg className="absolute inset-0 -rotate-90" width="300" height="300">
+            <defs>
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="hsl(var(--secondary))" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="hsl(var(--tertiary))" stopOpacity="0.6" />
+              </linearGradient>
+            </defs>
             <circle
-              cx="140"
-              cy="140"
-              r="130"
+              cx="150"
+              cy="150"
+              r="142"
               fill="none"
               stroke="currentColor"
-              strokeWidth="12"
-              className="text-secondary/30"
+              strokeWidth="8"
+              className="text-muted/20"
             />
             <circle
-              cx="140"
-              cy="140"
-              r="130"
+              cx="150"
+              cy="150"
+              r="142"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="12"
-              className="text-primary transition-all duration-500 ease-out"
-              strokeDasharray={`${2 * Math.PI * 130}`}
-              strokeDashoffset={`${2 * Math.PI * 130 * (1 - progress / 100)}`}
+              stroke="url(#progressGradient)"
+              strokeWidth="10"
+              className="transition-all duration-700 ease-out drop-shadow-lg"
+              strokeDasharray={`${2 * Math.PI * 142}`}
+              strokeDashoffset={`${2 * Math.PI * 142 * (1 - progress / 100)}`}
               strokeLinecap="round"
             />
           </svg>
@@ -241,12 +249,22 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
 
         <button
           onClick={handleIncrement}
-          className="relative flex items-center justify-center w-[280px] h-[280px] rounded-full bg-primary text-primary-foreground shadow-2xl active:scale-95 transition-all duration-200 ease-out touch-manipulation hover:shadow-primary/30 hover:scale-105"
+          className="group relative flex items-center justify-center w-[300px] h-[300px] rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-2xl active:scale-90 transition-all duration-500 ease-out touch-manipulation hover:shadow-primary/40 hover:shadow-[0_20px_60px] hover:scale-105 active:duration-150"
           aria-label="Increment counter"
+          style={{
+            background: activeCounter?.currentValue === 0
+              ? "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%)"
+              : "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--tertiary)) 100%)",
+          }}
         >
-          <div className="text-center">
-            <div className="text-8xl font-bold tabular-nums">{activeCounter?.currentValue || 0}</div>
-            <div className="text-lg mt-2 opacity-90">
+          {/* Animated ring on hover */}
+          <div className="absolute inset-0 rounded-full bg-primary/20 scale-110 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
+
+          <div className="text-center relative z-10">
+            <div className="text-8xl font-bold tabular-nums tracking-tight drop-shadow-lg">
+              {activeCounter?.currentValue || 0}
+            </div>
+            <div className="text-lg mt-2 opacity-95 font-medium">
               {activeCounter?.currentValue === 0 ? "Tap to start" : `Tap to add ${activeCounter?.name || "row"}`}
             </div>
           </div>
@@ -262,53 +280,65 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
         </div>
       )}
 
-      <div className="w-full max-w-md space-y-3">
+      <div className="w-full max-w-md space-y-4">
         {activeCounter && (
-          <Card className="p-4">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-semibold text-foreground">{activeCounter.name}</h3>
-              <div className="flex gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
+          <div className="p-5 rounded-[28px] bg-card border-2 border-border shadow-xl backdrop-blur-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-bold text-lg text-foreground">{activeCounter.name}</h3>
+              <div className="flex gap-2">
+                <button
+                  className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-accent transition-all duration-300 active:scale-95"
                   onClick={() => handleEditCounter(activeCounter)}
                 >
                   <Settings className="h-4 w-4" />
-                </Button>
+                </button>
                 {project.counters.length > 1 && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-destructive"
+                  <button
+                    className="h-9 w-9 rounded-[18px] flex items-center justify-center hover:bg-destructive/10 text-destructive transition-all duration-300 active:scale-95"
                     onClick={() => handleDeleteCounter(activeCounter.id)}
                   >
                     <Trash2 className="h-4 w-4" />
-                  </Button>
+                  </button>
                 )}
               </div>
             </div>
-            <div className="text-sm text-muted-foreground space-y-1">
-              {activeCounter.targetValue && <div>Target: {activeCounter.targetValue}</div>}
-              {activeCounter.resetAt && <div>Auto-reset at: {activeCounter.resetAt}</div>}
+            <div className="text-sm text-muted-foreground space-y-2">
+              {activeCounter.targetValue && (
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">Target:</span>
+                  <span className="font-semibold text-foreground">{activeCounter.targetValue}</span>
+                </div>
+              )}
+              {activeCounter.resetAt && (
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">Auto-reset at:</span>
+                  <span className="font-semibold text-foreground">{activeCounter.resetAt}</span>
+                </div>
+              )}
               {activeCounter.alerts && activeCounter.alerts.length > 0 && (
-                <div className="flex gap-1 flex-wrap items-center">
-                  <span>Alerts:</span>
+                <div className="flex gap-2 flex-wrap items-center">
+                  <span className="font-medium">Alerts:</span>
                   {activeCounter.alerts.map((alert) => (
-                    <Badge key={alert} variant="secondary" className="text-xs">
+                    <span
+                      key={alert}
+                      className="px-3 py-1 rounded-[12px] bg-secondary/20 text-secondary-foreground font-semibold text-xs"
+                    >
                       {alert}
-                    </Badge>
+                    </span>
                   ))}
                 </div>
               )}
             </div>
-          </Card>
+          </div>
         )}
 
-        <Button variant="outline" className="w-full rounded-full bg-transparent" onClick={handleAddCounter}>
-          <PlusIcon className="h-4 w-4 mr-2" />
+        <button
+          className="w-full h-12 rounded-[24px] bg-card border-2 border-border hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 font-semibold active:scale-95"
+          onClick={handleAddCounter}
+        >
+          <PlusIcon className="h-5 w-5" />
           Add Counter
-        </Button>
+        </button>
       </div>
 
       <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>

@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,27 +10,26 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Plus } from "lucide-react"
-import type { KnittingProject } from "@/lib/types"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import type { KnittingProject } from "@/lib/types";
+import { useEffect, useState } from "react";
 
 interface NewProjectDialogProps {
   onCreateProject: (projectData: {
-    name: string
-    totalRows: number
-    description?: string
-    pattern?: string
-    yarn?: string
-    needleSize?: string
-  }) => void
-  editProject?: KnittingProject
-  trigger?: React.ReactNode
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+    name: string;
+    totalRows: number;
+    description?: string;
+    pattern?: string;
+    yarn?: string;
+    needleSize?: string;
+  }) => void;
+  editProject?: KnittingProject;
+  trigger?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function NewProjectDialog({
@@ -41,37 +39,39 @@ export function NewProjectDialog({
   open: controlledOpen,
   onOpenChange,
 }: NewProjectDialogProps) {
-  const [internalOpen, setInternalOpen] = useState(false)
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [pattern, setPattern] = useState("")
-  const [yarn, setYarn] = useState("")
-  const [needleSize, setNeedleSize] = useState("")
-  const [totalRows, setTotalRows] = useState("")
+  const [internalOpen, setInternalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [pattern, setPattern] = useState("");
+  const [yarn, setYarn] = useState("");
+  const [needleSize, setNeedleSize] = useState("");
+  const [totalRows, setTotalRows] = useState("");
 
-  const open = controlledOpen !== undefined ? controlledOpen : internalOpen
-  const setOpen = onOpenChange || setInternalOpen
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setOpen = onOpenChange || setInternalOpen;
 
   useEffect(() => {
     if (editProject) {
-      setName(editProject.name)
-      setDescription(editProject.description || "")
-      setPattern(editProject.pattern || "")
-      setYarn(editProject.yarn || "")
-      setNeedleSize(editProject.needleSize || "")
-      setTotalRows(editProject.totalRows > 0 ? editProject.totalRows.toString() : "")
+      setName(editProject.name);
+      setDescription(editProject.description || "");
+      setPattern(editProject.pattern || "");
+      setYarn(editProject.yarn || "");
+      setNeedleSize(editProject.needleSize || "");
+      setTotalRows(
+        editProject.totalRows > 0 ? editProject.totalRows.toString() : ""
+      );
     } else {
-      setName("")
-      setDescription("")
-      setPattern("")
-      setYarn("")
-      setNeedleSize("")
-      setTotalRows("")
+      setName("");
+      setDescription("");
+      setPattern("");
+      setYarn("");
+      setNeedleSize("");
+      setTotalRows("");
     }
-  }, [editProject, open])
+  }, [editProject, open]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (name.trim()) {
       onCreateProject({
         name: name.trim(),
@@ -80,34 +80,29 @@ export function NewProjectDialog({
         pattern: pattern.trim() || undefined,
         yarn: yarn.trim() || undefined,
         needleSize: needleSize.trim() || undefined,
-      })
-      setName("")
-      setDescription("")
-      setPattern("")
-      setYarn("")
-      setNeedleSize("")
-      setTotalRows("")
-      setOpen(false)
+      });
+      setName("");
+      setDescription("");
+      setPattern("");
+      setYarn("");
+      setNeedleSize("");
+      setTotalRows("");
+      setOpen(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      {!trigger && (
-        <DialogTrigger asChild>
-          <Button size="lg" className="rounded-full h-14 px-8">
-            <Plus className="h-5 w-5 mr-2" />
-            New Project
-          </Button>
-        </DialogTrigger>
-      )}
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{editProject ? "Edit Project" : "Create New Project"}</DialogTitle>
+            <DialogTitle>
+              {editProject ? "Edit Project" : "Create New Project"}
+            </DialogTitle>
             <DialogDescription>
-              {editProject ? "Update your project details" : "Start tracking a new knitting project"}
+              {editProject
+                ? "Update your project details"
+                : "Start tracking a new knitting project"}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -175,7 +170,9 @@ export function NewProjectDialog({
                 value={totalRows}
                 onChange={(e) => setTotalRows(e.target.value)}
               />
-              <p className="text-xs text-muted-foreground">Leave empty if you don't know the total yet</p>
+              <p className="text-xs text-muted-foreground">
+                Leave empty if you don't know the total yet
+              </p>
             </div>
           </div>
           <DialogFooter>
@@ -186,5 +183,5 @@ export function NewProjectDialog({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
