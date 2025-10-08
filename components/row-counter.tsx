@@ -201,10 +201,10 @@ export function RowCounter({ project, onUpdateProject }: RowCounterProps) {
           {project.counters.map((counter) => (
             <button
               key={counter.id}
-              className={`px-5 py-2.5 rounded-[24px] font-semibold text-sm transition-all duration-500 ${
+              className={`px-5 py-2.5 rounded-[24px] font-semibold text-sm transition-all duration-300 ${
                 counter.id === activeCounterId
-                  ? "bg-primary text-primary-foreground shadow-xl scale-110"
-                  : "bg-card border-2 border-border text-foreground hover:bg-accent hover:scale-105 shadow-md"
+                  ? "bg-primary text-primary-foreground shadow-xl"
+                  : "bg-card border-2 border-border text-foreground hover:bg-accent shadow-md"
               }`}
               onClick={() => setActiveCounterId(counter.id)}
             >
