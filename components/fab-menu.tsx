@@ -31,7 +31,7 @@ export function FabMenu({
   };
 
   return (
-    <div className="fixed bottom-2 -right-28 sm:bottom-8 sm:right-8">
+    <div className="fixed bottom-2 left-2 sm:bottom-8 sm:right-8">
       {/* Menu items - appear above FAB when expanded with stagger animation */}
       <div
         className={`flex flex-col gap-4 mb-4 transition-all duration-500 ease-out ${
@@ -42,10 +42,10 @@ export function FabMenu({
       >
         {/* Projects button */}
         <div
-          className={`flex items-center gap-4 justify-end transition-all duration-500 ${
+          className={`flex flex-row-reverse sm:flex-row items-center gap-4 justify-start sm:justify-end transition-all duration-500 ${
             isExpanded
               ? "translate-x-0 opacity-100 delay-100"
-              : "translate-x-8 opacity-0"
+              : "-translate-x-8 sm:translate-x-8 opacity-0"
           }`}
         >
           <div className="bg-card px-5 py-2.5 rounded-[20px] shadow-xl backdrop-blur-sm border-2 border-border">
@@ -68,10 +68,10 @@ export function FabMenu({
 
         {/* New project button */}
         <div
-          className={`flex items-center gap-4 justify-end transition-all duration-500 ${
+          className={`flex flex-row-reverse sm:flex-row items-center gap-4 justify-start sm:justify-end transition-all duration-500 ${
             isExpanded
               ? "translate-x-0 opacity-100 delay-200"
-              : "translate-x-8 opacity-0"
+              : "-translate-x-8 sm:translate-x-8 opacity-0"
           }`}
         >
           <div className="bg-card px-5 py-2.5 rounded-[20px] shadow-xl backdrop-blur-sm border-2 border-border">

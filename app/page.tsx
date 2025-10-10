@@ -6,7 +6,6 @@ import { getProjects, saveProjects, createProject } from "@/lib/storage"
 import { RowCounter } from "@/components/row-counter"
 import { ProjectList } from "@/components/project-list"
 import { NewProjectDialog } from "@/components/new-project-dialog"
-import { Onboarding } from "@/components/onboarding"
 import { FabMenu } from "@/components/fab-menu"
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [showNewProjectDialog, setShowNewProjectDialog] = useState(false)
   const [editingProject, setEditingProject] = useState<KnittingProject | undefined>(undefined)
-  const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
     const loadedProjects = getProjects()
@@ -135,9 +133,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background via-background to-primary/5">
-      <Onboarding onVisibilityChange={setShowOnboarding} />
-
+    <div className="h-dvh flex flex-col bg-gradient-to-br from-background via-background to-primary/5">
       <main className="flex-1 flex flex-col pb-32">
         {showProjects ? (
           <div className="flex-1 overflow-auto">
@@ -173,16 +169,14 @@ export default function Home() {
         )}
       </main>
 
-      {!showOnboarding && (
-        <FabMenu
-          onProjectsClick={() => setShowProjects(!showProjects)}
-          onNewProjectClick={() => {
-            setEditingProject(undefined)
-            setShowNewProjectDialog(true)
-          }}
-          showProjects={showProjects}
-        />
-      )}
+      <FabMenu
+        onProjectsClick={() => setShowProjects(!showProjects)}
+        onNewProjectClick={() => {
+          setEditingProject(undefined)
+          setShowNewProjectDialog(true)
+        }}
+        showProjects={showProjects}
+      />
 
       <NewProjectDialog
         open={showNewProjectDialog}
