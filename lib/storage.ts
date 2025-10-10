@@ -1,28 +1,28 @@
-import type { KnittingProject, Counter } from "./types"
+import type { Counter, KnittingProject } from "./types";
 
-const STORAGE_KEY = "knittingpal_projects"
+const STORAGE_KEY = "knittingpal_projects";
 
 export function getProjects(): KnittingProject[] {
-  if (typeof window === "undefined") return []
+  if (typeof window === "undefined") return [];
 
-  const stored = localStorage.getItem(STORAGE_KEY)
-  if (!stored) return []
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return [];
 
   try {
-    const projects = JSON.parse(stored)
+    const projects = JSON.parse(stored);
     return projects.map((p: any) => ({
       ...p,
       createdAt: new Date(p.createdAt),
       updatedAt: new Date(p.updatedAt),
-    }))
+    }));
   } catch {
-    return []
+    return [];
   }
 }
 
 export function saveProjects(projects: KnittingProject[]): void {
-  if (typeof window === "undefined") return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects))
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
 }
 
 export function createProject(
@@ -38,7 +38,7 @@ export function createProject(
     name: "Rows",
     currentValue: 0,
     targetValue: totalRows > 0 ? totalRows : undefined,
-  }
+  };
 
   return {
     id: crypto.randomUUID(),
@@ -52,5 +52,5 @@ export function createProject(
     needleSize,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }
+  };
 }

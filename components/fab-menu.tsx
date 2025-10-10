@@ -31,34 +31,34 @@ export function FabMenu({
   };
 
   return (
-    <div className="fixed bottom-2 left-2 sm:bottom-8 sm:right-8">
+    <div className="fixed bottom-2 left-2 sm:right-8 sm:bottom-8">
       {/* Menu items - appear above FAB when expanded with stagger animation */}
       <div
-        className={`flex flex-col gap-4 mb-4 transition-all duration-500 ease-out ${
+        className={`mb-4 flex flex-col gap-4 transition-all duration-500 ease-out ${
           isExpanded
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8 pointer-events-none"
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-8 opacity-0"
         }`}
       >
         {/* Projects button */}
         <div
-          className={`flex flex-row-reverse sm:flex-row items-center gap-4 justify-start sm:justify-end transition-all duration-500 ${
+          className={`flex flex-row-reverse items-center justify-start gap-4 transition-all duration-500 sm:flex-row sm:justify-end ${
             isExpanded
               ? "translate-x-0 opacity-100 delay-100"
-              : "-translate-x-8 sm:translate-x-8 opacity-0"
+              : "-translate-x-8 opacity-0 sm:translate-x-8"
           }`}
         >
-          <div className="bg-card px-5 py-2.5 rounded-[20px] shadow-xl backdrop-blur-sm border-2 border-border">
-            <span className="text-sm font-semibold text-foreground">
+          <div className="bg-card border-border rounded-[20px] border-2 px-5 py-2.5 shadow-xl backdrop-blur-sm">
+            <span className="text-foreground text-sm font-semibold">
               Projects
             </span>
           </div>
           <button
             onClick={handleProjectsClick}
-            className={`h-16 w-16 rounded-[28px] shadow-2xl transition-all duration-300 flex items-center justify-center active:scale-95 hover:scale-105 ${
+            className={`flex h-16 w-16 items-center justify-center rounded-[28px] shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 ${
               showProjects
                 ? "bg-secondary text-secondary-foreground hover:shadow-secondary/30"
-                : "bg-card border-2 border-border text-foreground hover:bg-accent"
+                : "bg-card border-border text-foreground hover:bg-accent border-2"
             }`}
             aria-label="View projects"
           >
@@ -68,20 +68,20 @@ export function FabMenu({
 
         {/* New project button */}
         <div
-          className={`flex flex-row-reverse sm:flex-row items-center gap-4 justify-start sm:justify-end transition-all duration-500 ${
+          className={`flex flex-row-reverse items-center justify-start gap-4 transition-all duration-500 sm:flex-row sm:justify-end ${
             isExpanded
               ? "translate-x-0 opacity-100 delay-200"
-              : "-translate-x-8 sm:translate-x-8 opacity-0"
+              : "-translate-x-8 opacity-0 sm:translate-x-8"
           }`}
         >
-          <div className="bg-card px-5 py-2.5 rounded-[20px] shadow-xl backdrop-blur-sm border-2 border-border">
-            <span className="text-sm font-semibold text-foreground">
+          <div className="bg-card border-border rounded-[20px] border-2 px-5 py-2.5 shadow-xl backdrop-blur-sm">
+            <span className="text-foreground text-sm font-semibold">
               New Project
             </span>
           </div>
           <button
             onClick={handleNewProjectClick}
-            className="h-16 w-16 rounded-[28px] bg-tertiary text-tertiary-foreground hover:bg-tertiary/90 shadow-2xl transition-all duration-300 flex items-center justify-center active:scale-95 hover:scale-105 hover:shadow-tertiary/30"
+            className="bg-tertiary text-tertiary-foreground hover:bg-tertiary/90 hover:shadow-tertiary/30 flex h-16 w-16 items-center justify-center rounded-[28px] shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
             aria-label="New project"
           >
             <Plus className="h-7 w-7" strokeWidth={2.5} />
@@ -92,27 +92,27 @@ export function FabMenu({
       {/* Main FAB - toggles menu with expressive shape morphing */}
       <button
         onClick={toggleMenu}
-        className={`h-20 w-20 bg-primary text-primary-foreground shadow-2xl transition-all duration-500 ease-out flex items-center justify-center hover:shadow-primary/40 ${
+        className={`bg-primary text-primary-foreground hover:shadow-primary/40 flex h-20 w-20 items-center justify-center shadow-2xl transition-all duration-500 ease-out ${
           isExpanded
-            ? "rounded-[20px] rotate-180 scale-95"
-            : "rounded-[32px] rotate-0 scale-100 hover:scale-110 active:scale-95"
+            ? "scale-95 rotate-180 rounded-[20px]"
+            : "scale-100 rotate-0 rounded-[32px] hover:scale-110 active:scale-95"
         }`}
         aria-label={isExpanded ? "Close menu" : "Open menu"}
       >
-        <div className="relative flex items-center justify-center w-8 h-8">
+        <div className="relative flex h-8 w-8 items-center justify-center">
           <Menu
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
               isExpanded
-                ? "rotate-180 opacity-0 scale-0"
-                : "rotate-0 opacity-100 scale-100"
+                ? "scale-0 rotate-180 opacity-0"
+                : "scale-100 rotate-0 opacity-100"
             }`}
             strokeWidth={2.5}
           />
           <X
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${
               isExpanded
-                ? "rotate-0 opacity-100 scale-100"
-                : "-rotate-180 opacity-0 scale-0"
+                ? "scale-100 rotate-0 opacity-100"
+                : "scale-0 -rotate-180 opacity-0"
             }`}
             strokeWidth={2.5}
           />

@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { KnittingProject } from "@/lib/types";
+import type React from "react";
 import { useEffect, useState } from "react";
 
 interface NewProjectDialogProps {
@@ -58,7 +57,7 @@ export function NewProjectDialog({
       setYarn(editProject.yarn || "");
       setNeedleSize(editProject.needleSize || "");
       setTotalRows(
-        editProject.totalRows > 0 ? editProject.totalRows.toString() : ""
+        editProject.totalRows > 0 ? editProject.totalRows.toString() : "",
       );
     } else {
       setName("");
@@ -93,7 +92,7 @@ export function NewProjectDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-md">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>
@@ -170,7 +169,7 @@ export function NewProjectDialog({
                 value={totalRows}
                 onChange={(e) => setTotalRows(e.target.value)}
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-muted-foreground text-xs">
                 Leave empty if you don't know the total yet
               </p>
             </div>
